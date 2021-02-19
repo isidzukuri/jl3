@@ -1,2 +1,57 @@
 - drop yakaboo tables
-- rename tables acordingly to rails convention 
+* rename tables acordingly to rails convention 
+* rename columns
+- adsense
+
+
+book page:
+- meta data
+- book data
+- downloads
+- bookreader
+- fb comments
+* security checks
+* rating
+* add tag
+* add to list
+* add quote
+
+home page:
+- meta data
+- description
+- blog posts
+- books recomendations
+
+search page
+- book search
+- author search
+- paper books
+- other libraries
+* extended search
+
+blog page
+- list
+- pagination
+- fb comments
+- post page
+
+User page
+*
+
+Latest book page
+- list
+
+Photos page
+- tumblr integration
+
+First letter page
+- list
+
+Gengre page
+- list
+- add to readlist
+* remote sort
+
+Author page
+- list
+- bio
