@@ -1,0 +1,18 @@
+Metrics/BlockLength:
+  Exclude:
+    - config/routes.rb
+    - spec/support/**/*
+    - db/schema.rb
+  ExcludedMethods:
+    - describe
+    - context
+    - factory
+
+Metrics/LineLength:
+  Max: 120
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Documentation:
+  Enabled: false
