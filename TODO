@@ -2,7 +2,9 @@
 * rename tables acordingly to rails convention 
 * rename columns
 - adsense
-
+* move to books authors many to many
+* try to read each text with ruby to ctch encoding errors
+- lets encrypt ssl
 
 book page:
 - meta data
