@@ -1,14 +1,14 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 require 'ffaker'
 
-
-OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ciphers]=OpenSSL::SSL::SSLContext.new.ciphers; # fix: key not found: :ciphers
+OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ciphers] = OpenSSL::SSL::SSLContext.new.ciphers
+# fix: key not found: :ciphers
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

@@ -1,4 +1,3 @@
-
 FactoryBot.define do
   factory :book do
     authorid { 1 }
