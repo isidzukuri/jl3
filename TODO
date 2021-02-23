@@ -5,6 +5,8 @@
 * move to books authors many to many
 * try to read each text with ruby to ctch encoding errors
 - lets encrypt ssl
+* get rid of "java-" suffix from urls
+
 
 book page:
 - meta data
@@ -12,6 +14,7 @@ book page:
 - downloads
 - bookreader
 - fb comments
+- formats generators
 * security checks
 * rating
 * add tag

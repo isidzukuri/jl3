@@ -5,7 +5,7 @@ module Books
         data = Queries::FullDataset.new.call(book_id)
         return unless data
 
-        data[:tags_list] = tags_list(book_id)
+        data[:tags_list] = tags_list(data[:id])
         data
       end
 
