@@ -1,10 +1,11 @@
 FactoryBot.define do
   factory :book do
-    authorid { 1 }
-    genre { 1 }
     bookname { FFaker::Book.title }
     bookdescribe { FFaker::Book.description }
     txtfile { '' }
+    seo { FFaker::Internet.slug }
+    txt_size_kb { 100 }
+
     # paper { FFaker::Internet.http_url }
     # txt { FFaker::Internet.http_url }
     # rtf { FFaker::Internet.http_url }
@@ -17,5 +18,7 @@ FactoryBot.define do
 
     # genre { create(:genre) }
     # authors { [create(:author)] }
+    author
+    genre
   end
 end

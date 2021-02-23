@@ -6,5 +6,10 @@ FactoryBot.define do
     type { 'page' }
     related { rand(100..1000) }
     admin_name { 'Contacts page' }
+
+    trait :book do
+      type { 'book' }
+      related { 0 }
+    end
   end
 end
