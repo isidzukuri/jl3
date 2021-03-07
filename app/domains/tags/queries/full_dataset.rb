@@ -1,11 +1,11 @@
-module Genres
+module Tags
   module Queries
     class FullDataset
       def call(id)
         column = if id.is_a?(Integer)
                    'id'
                  else
-                   id.scan(/\D/).empty? ? 'id' : 'seo_name'
+                   id.scan(/\D/).empty? ? 'id' : 'seo_url'
                  end
 
         ActiveRecord::Base.connection
@@ -17,16 +17,15 @@ module Genres
       def sql(column, value)
         <<-SQL
           SELECT
-            genre.id,
-            genre.name,
-            meta_data.title,
+            tags.*,
+            meta_data.title AS meta_title,
             meta_data.keywords,
             meta_data.description,
             text_blocks.text
-          FROM genre
-           LEFT JOIN meta_data ON genre.id = meta_data.related AND meta_data.type = 'genre'
-           LEFT JOIN text_blocks ON genre.id = text_blocks.related AND text_blocks.type = 'genre'
-           WHERE genre.#{column} = '#{value}'
+          FROM tags
+           LEFT JOIN meta_data ON meta_data.related = 0 AND meta_data.type = 'tags'
+           LEFT JOIN text_blocks ON text_blocks.related = 0 AND text_blocks.type = 'tags'
+           WHERE tags.#{column} = '#{value}'
         SQL
       end
     end
