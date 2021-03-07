@@ -4,5 +4,6 @@ FactoryBot.define do
     l_name { FFaker::Name.last_name }
     full_name { FFaker::Name.name }
     bio { FFaker::Lorem.paragraph }
+    seo { FFaker::Internet.slug }
   end
 end
