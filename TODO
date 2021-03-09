@@ -6,6 +6,7 @@
 * try to read each text with ruby to ctch encoding errors
 - lets encrypt ssl
 * get rid of "java-" suffix from urls
+- build each bok in each format to catch bugs
 
 
 book page:
@@ -39,6 +40,7 @@ blog page
 - pagination
 - fb comments
 - post page
+* carierwave for imagess
 
 User page
 *
