@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <title>Jl3</title>
@@ -13,4 +13,345 @@
   <body>
     <%= yield %>
   </body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<head>
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--[if lt IE 9]> 
+   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> 
+   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <?php 
+  $metatada = $this->metadata()->get();
+  ?>
+  <meta name="keywords" content="<?php echo $metatada['keywords'] ?>" />
+  <meta name="description" content="<?php echo $metatada['description'] ?>" />
+  <title><?php echo $metatada['title'] ?></title>
+
+  <meta property="og:title" content="<?php echo $metatada['title'] ?>" />
+  <meta property="og:description" content="<?php echo $metatada['description'];?>" />
+  <meta property="fb:admins" content="100001460454811"/>
+  <meta property="og:type" content="website" />
+  <?php if(isset($metatada['fb_img']))
+    foreach ($metatada['fb_img'] as $row) {
+  echo "<meta property='og:image' content='http://{$_SERVER['HTTP_HOST']}/uploads/blog/300x300_{$row}' />";
+    } 
+  ?>
+  <meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']?>/public/img/logo.png" />
+
+  <link rel="apple-touch-icon" href="/public/img/apple-touch-icon.png"/>
+  <meta name="google-site-verification" content="OzGSzDJBG6J3Ryp5jlWDCwRS8fW3utJdSFCLd1tD2O4" />
+  <?=$this->render('styles.phtml')?>
+</head>
+<body>
+    <div id="fb-root"></div>
+
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h1 class="navbar-brand" id="logo"><a href='/'><?php echo $this->translate('logo_title'); ?></a></h1>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav" id="topmenu">
+                <li><a href='/'><?php echo $this->translate('main'); ?></a></li>           
+                <li><a href='/blog/page/1'><?php echo $this->translate('blog'); ?></a></li>
+                <!-- <li><a href='/java-book/java-converter/'><?php echo $this->translate('converter'); ?></a></li> -->
+                <li><a href='/user'><?php echo $this->translate('cabinet'); ?></a></li>
+                <!-- <li><a href='/java-book/addbookuser/'><?php echo $this->translate('add_book'); ?></a></li> -->
+                <li><a href='/latest'><?php echo $this->translate('incommings'); ?></a></li>
+                <li><a href='/photos/page/1'><?php echo $this->translate('photo'); ?></a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+    <?php if($adsense && $controller == 'index'){?>
+    <div class="container">
+      <div id="header_banner">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- header responsive -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-7724914382232630"
+                     data-ad-slot="7210650626"
+                     data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <?php }?>
+
+    <?php if(!empty($menu['letter'])){ ?>
+    <div class="container">
+        <div id="alf">
+            <p><?php echo $this->translate('first_letter'); ?></p>
+            <div id="alf_wrap">
+                <?php foreach($menu['letter'] as $g){?>
+                <div class="flag">
+                    <a href="/java-book/fsymbol/<?php echo $g['id']?>"><?php echo $g['symbol']?></a>
+                </div>
+                <?php }?>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div><!-- /.container -->
+    <?php } ?>
+<br/>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-3 col-sm-12 left_coll">
+
+
+          <div class="container">
+
+            <div class="row">
+              <div class="col-sm-6 col-xs-8 col-md-12" >
+
+                <div id="sbox">
+                    <form action="/search" method="GET">
+                        <p><strong><?php echo $this->translate('search'); ?></strong></p>
+                        <p>
+                            <input id="str" name="authorsearch" type="text" size="40" value="<?php echo $this->translate('search_placeholder'); ?>" />
+                            <input id="but" type="submit" value="">
+                            <a id="extended_search_but" href="/extended_search"><?php echo $this->translate('extended_search'); ?></a>
+                            <div class="clear"></div>
+                        </p>
+                    </form>        
+                </div>
+
+              </div>
+
+              <div class="col-sm-6 col-xs-4 col-md-12" >
+
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#genre_nav">
+                          <div class="genres_nav_title">Жанри</div>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <div class="clearfix"></div>
+                        </button>
+                    </div>
+
+                    <div id="genre_nav" class="collapse navbar-collapse">
+                        <ul class="nav nav-stacked">
+                            <?php foreach($menu['genre'] as $g){?>
+                                <li><a href="/java-book/genre/<?php echo $g['seo_name']?>/page/1"><?php echo $g['name']?></a></li>
+                            <?php }?>          
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div> <!--left coll -->
+
+
+
+        <div class="col-md-7 col-sm-9">
+          <%= yield %>
+        </div><!-- main content -->
+
+
+
+        <div class="col-md-2 col-sm-3 right_coll">      
+            <div class="g-plusone" data-size="medium" data-annotation="inline" data-width="250" data-href="http://<?php echo $_SERVER['HTTP_HOST']?>/"></div>
+            <?php if($adsense && $controller != 'index' && $controller != 'cabinet'){?>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- header responsive -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7724914382232630"
+                 data-ad-slot="7210650626"
+                 data-ad-format="auto"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <?php }?>
+        </div>
+      </div> 
+
+
+        <?php if($controller == 'book'){?>
+        <div class="container descript_text">
+            <?php echo $this->text ?>
+        </div>
+        <?php }?>
+    
+
+
+        <div class="hide_on_small">
+            <?php if($adsense && in_array($controller, array('genre','converter','blog'))){?>
+             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- header responsive -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7724914382232630"
+                 data-ad-slot="7210650626"
+                 data-ad-format="auto"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <?php }?>
+        </div>
+        
+            <div id="footer" class="row">
+                <div id="main_quote"><?php echo $this->translate('main_quote'); ?></div>
+                <div id="other_langs_libraries" class="fl">
+                    <p><?php echo $this->translate('read_also_books');
+                        foreach($this->translate('other_libraries') as $title => $href){ ?>
+                        <a href="<?php echo $href ?>" target="blank"><?php echo $title ?></a>
+                        <?php }?>
+                    </p>
+                </div>
+                <div id="counter" >
+                </div>
+                <div id="fotmenu">
+                    <p><?php echo "{$this->translate('project_name')} © {$this->translate('since')} - ".date('Y'); ?>
+                        <a href='/java-book/about/'>| <?php echo $this->translate('about_site'); ?> |</a>
+                        <a href="/java-book/contact/"><?php echo $this->translate('contacts'); ?> </a>
+                    </p>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div><!-- /.container -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="global_popup">
+      <div id="alert_popup">
+          <div class="popup_wrap">
+            <p class="red_h2"></p>
+          </div>
+            <div class="popup_text">
+                    <div>
+                        <p></p>
+                        <br/>
+                        <div class="clear"></div>
+                        <a class="button"><?php echo $this->translate('ok'); ?></a>
+                        <div class="clear"></div>
+                        <br/>
+                    </div>
+                <div class="teeth_bottom"></div>
+            </div>
+            <div class="alert_footer"></div>            
+        </div>
+        <!--alert popup end-->
+        <?php  if($controller == 'book'){
+            echo $this->render('book/reader.phtml');
+        }else{ ?> 
+            <div class="book_loader">
+                <?php echo $this->translate('wait_pls'); ?>...
+            </div>
+        <?php }?>
+    </div>
+
+    <div id="global_settings_wrap">
+        <div class="l_side">
+            <div class="g_settings_ico"></div>
+        </div>
+        <!-- <div id="g_settings_wrap">
+            <h4>Налаштування</h4>
+            <br>
+            &#8226; Показувати твори з розміром тексту не менше 
+            <input name="settings_min_text_size" value="0" />
+            кБ
+            <br>
+            <br>
+            <a class="enable_settings button lil_button" >Застосувати</a>
+            <div class="lil_loader"></div>
+        </div> -->
+        <?php if($controller == 'book') echo $this->render('book/bookpage_additions.phtml'); ?>
+        <div id="clear"></div>
+    </div>
+
+    <div id="global_rising_block">
+        <div class="append_here"></div>
+        <div id="cancel_global_rising_block"></div>
+    </div>
+
+
+ <%
+  js_config = {
+    language: 'uk',
+    locale: 'uk_UA',
+    fb_appId: '461405167348259',
+    ga: 'UA-24954004-1'
+  }
+ %>
+
+    <script>
+      window.sokrat_js_config = <%== js_config.to_json %>;
+      // window.sokrat_js_config = <?php echo json_encode(Zend_Registry::get('js_config')); ?>;
+    </script><!-- 
+    <script src="/public/js/jquery.js"></script>
+    <script src="/public/js/jquery-ui-1.10.2.custom.min.js"></script>
+    <script src="/public/js/jquery.easing.js"></script>
+    <script src="/public/js/simple_fixed_block.js"></script>
+    <script src="/public/js/front_global.js"></script>
+    <script src="/public/js/jquery.cookie.js"></script>
+    <script src="/public/js/bootstrap.min.js"></script> -->
+
+    <?php $this->Javascript()->add(); ?>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', window.sokrat_js_config.ga, 'auto');
+      ga('send', 'pageview');
+
+      window.socrat_action ="<?php echo $this->blocks()->get_action(); ?>";
+      window.socrat_controller ="<?php echo $this->blocks()->get_active(); ?>";
+      window.user_id =<?php echo $this->Keeper()->get_user_id(); ?>;
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-7724914382232630",
+        enable_page_level_ads: true
+      });
+    </script>
+</body>
 </html>
