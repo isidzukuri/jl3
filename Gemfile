@@ -65,5 +65,6 @@ group :test do
   gem 'webmock'
 end
 
-gem 'awesome_print'
+gem 'amazing_print'
 gem 'mysql2'
+gem 'pagy'
