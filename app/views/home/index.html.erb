@@ -1,5 +1,34 @@
+<div class="front_section justify_text">
+  <%== @data[:text] %>
+</div>
 
+<% if @data[:last_books].any? %>
+<div class="front_section">
+  <h2><%= t(:last_added_books) %>:</h2>
+  <div id="last_slider">
+  <% @data[:last_books].each do |book| %>
+    <div class="last_one">
+      <div class="last_img">
+        <a href="/java-book/book/<%= book_key(book) %>"> 
+          <img src="/images/covers/<%= book[:cover] %>" alt="<%= book[:bookname] %>" title="<%= book[:bookname] %>" />
+        </a>
+        <div class="description">
+          <a href="/java-book/book/<%= book_key(book) %>" class="booklink">"<%= book[:bookname] %>"</a><br />
+          <a href="/java-book/author/<%= author_key(book) %>" class="auth_link"><%= author_full_name(book) %></a><br />
+        </div>
+      </div>
+      <div class="clear"></div>   
+    </div>
+  <% end %>
+  </div>
+  <div class="clear"></div>
+</div>
+<% end %>
 
-home
-
-<%= @data %>
+<% if @data[:articles].any? %>
+<div class="front_blog front_section">
+  <h2><%= t(:blog_last_posts) %>:</h2>
+  <%= render partial: 'blog/article', collection: @data[:articles] %>
+  <div class="clear"></div>
+</div>
+<% end %>

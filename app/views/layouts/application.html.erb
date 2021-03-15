@@ -1,3 +1,18 @@
+<!-- TODO
+- translations
+- scripts
+- scripts params
+- caching
+- render partials for specific pages
+- meta tags
+- images
+- `if` parts 
+- replace hrefs to rails helpers 
+- extract partials
+- fonts
+-->
+
+
 <!-- <!DOCTYPE html>
 <html>
   <head>
@@ -10,9 +25,6 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
 </html> -->
 
 
@@ -25,6 +37,7 @@
   <%= csp_meta_tag %>
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag I18n.locale %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
 
@@ -36,26 +49,25 @@
    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-  <?php 
-  $metatada = $this->metadata()->get();
-  ?>
-  <meta name="keywords" content="<?php echo $metatada['keywords'] ?>" />
-  <meta name="description" content="<?php echo $metatada['description'] ?>" />
-  <title><?php echo $metatada['title'] ?></title>
+  <title><%= @meta_title %></title>
+  <meta name="keywords" content="<%= @meta_keywords %>" />
+  <meta name="description" content="<%= @meta_description %>" />
 
-  <meta property="og:title" content="<?php echo $metatada['title'] ?>" />
-  <meta property="og:description" content="<?php echo $metatada['description'];?>" />
+  <meta property="og:title" content="<%= @meta_title %>" />
+  <meta property="og:description" content="<%= @meta_description %>" />
   <meta property="fb:admins" content="100001460454811"/>
   <meta property="og:type" content="website" />
-  <?php if(isset($metatada['fb_img']))
-    foreach ($metatada['fb_img'] as $row) {
-  echo "<meta property='og:image' content='http://{$_SERVER['HTTP_HOST']}/uploads/blog/300x300_{$row}' />";
-    } 
-  ?>
-  <meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']?>/public/img/logo.png" />
+  <% if @share_fb_images.present? %>
+    <% @share_fb_images.each do |img| %>
+  <meta property='og:image' content='<%= "https://#{request.host}/#{img}" %>' />
+    <% end %>
+  <% end %>
+  <meta property="og:image" content="<%= "https://#{request.host}#{asset_path('logo.png')}"%>" />
 
-  <link rel="apple-touch-icon" href="/public/img/apple-touch-icon.png"/>
+  <link rel="shortcut icon" href="<%=asset_path('favicon.ico')%>" />
+  <link rel="apple-touch-icon" href="<%=asset_path('apple-touch-icon.png')%>"/>
   <meta name="google-site-verification" content="OzGSzDJBG6J3Ryp5jlWDCwRS8fW3utJdSFCLd1tD2O4" />
+
   <?=$this->render('styles.phtml')?>
 </head>
 <body>
@@ -69,17 +81,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <h1 class="navbar-brand" id="logo"><a href='/'><?php echo $this->translate('logo_title'); ?></a></h1>
+          <h1 class="navbar-brand" id="logo"><a href='/'><%== t(:logo_title) %></a></h1>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav" id="topmenu">
-                <li><a href='/'><?php echo $this->translate('main'); ?></a></li>           
-                <li><a href='/blog/page/1'><?php echo $this->translate('blog'); ?></a></li>
-                <!-- <li><a href='/java-book/java-converter/'><?php echo $this->translate('converter'); ?></a></li> -->
-                <li><a href='/user'><?php echo $this->translate('cabinet'); ?></a></li>
-                <!-- <li><a href='/java-book/addbookuser/'><?php echo $this->translate('add_book'); ?></a></li> -->
-                <li><a href='/latest'><?php echo $this->translate('incommings'); ?></a></li>
-                <li><a href='/photos/page/1'><?php echo $this->translate('photo'); ?></a></li>
+                <li><a href='/'><%= t(:main) %></a></li>           
+                <li><a href='/blog/page/1'><%= t(:blog) %></a></li>
+                <!-- <li><a href='/java-book/java-converter/'><%= t(:converter) %></a></li> -->
+                <li><a href='/user'><%= t(:cabinet) %></a></li>
+                <!-- <li><a href='/java-book/addbookuser/'><%= t(:add_book) %></a></li> -->
+                <li><a href='/latest'><%= t(:incommings) %></a></li>
+                <li><a href='/photos/page/1'><%= t(:photo) %></a></li>
             </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -104,46 +116,39 @@
     </div>
     <?php }?>
 
-    <?php if(!empty($menu['letter'])){ ?>
+    <% if Letter.any? %>
     <div class="container">
         <div id="alf">
-            <p><?php echo $this->translate('first_letter'); ?></p>
+            <p><%= t(:first_letter) %></p>
             <div id="alf_wrap">
-                <?php foreach($menu['letter'] as $g){?>
+                <% Letter.all.each do |letter| %>
                 <div class="flag">
-                    <a href="/java-book/fsymbol/<?php echo $g['id']?>"><?php echo $g['symbol']?></a>
+                    <a href="/java-book/fsymbol/<%= letter[:id] %>"><%= letter[:symbol] %></a>
                 </div>
-                <?php }?>
+                <% end %>
                 <div class="clear"></div>
             </div>
         </div>
     </div><!-- /.container -->
-    <?php } ?>
-<br/>
+    <% end %>
+    <br/>
 
     <div class="container">
       <div class="row">
-
         <div class="col-md-3 col-sm-12 left_coll">
-
-
           <div class="container">
-
             <div class="row">
               <div class="col-sm-6 col-xs-8 col-md-12" >
-
                 <div id="sbox">
                     <form action="/search" method="GET">
-                        <p><strong><?php echo $this->translate('search'); ?></strong></p>
+                        <p><strong><%= t(:search) %></strong></p>
                         <p>
-                            <input id="str" name="authorsearch" type="text" size="40" value="<?php echo $this->translate('search_placeholder'); ?>" />
+                            <input id="str" name="authorsearch" type="text" size="40" value="<%= t(:search_placeholder) %>" />
                             <input id="but" type="submit" value="">
-                            <a id="extended_search_but" href="/extended_search"><?php echo $this->translate('extended_search'); ?></a>
                             <div class="clear"></div>
                         </p>
                     </form>        
                 </div>
-
               </div>
 
               <div class="col-sm-6 col-xs-4 col-md-12" >
@@ -151,7 +156,7 @@
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#genre_nav">
-                          <div class="genres_nav_title">Жанри</div>
+                          <div class="genres_nav_title"><%= t(:genres) %></div>
                           <span class="icon-bar"></span>
                           <span class="icon-bar"></span>
                           <span class="icon-bar"></span>
@@ -161,9 +166,9 @@
 
                     <div id="genre_nav" class="collapse navbar-collapse">
                         <ul class="nav nav-stacked">
-                            <?php foreach($menu['genre'] as $g){?>
-                                <li><a href="/java-book/genre/<?php echo $g['seo_name']?>/page/1"><?php echo $g['name']?></a></li>
-                            <?php }?>          
+                            <% Genre.all.each do |genre| %>
+                                <li><a href="/java-book/genre/<%= genre[:seo_name] %>/page/1"><%= genre[:name] %></a></li>
+                            <% end %>          
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </nav>
@@ -176,15 +181,12 @@
         </div> <!--left coll -->
 
 
-
         <div class="col-md-7 col-sm-9">
           <%= yield %>
         </div><!-- main content -->
 
 
-
         <div class="col-md-2 col-sm-3 right_coll">      
-            <div class="g-plusone" data-size="medium" data-annotation="inline" data-width="250" data-href="http://<?php echo $_SERVER['HTTP_HOST']?>/"></div>
             <?php if($adsense && $controller != 'index' && $controller != 'cabinet'){?>
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <!-- header responsive -->
@@ -198,6 +200,7 @@
             </script>
             <?php }?>
         </div>
+
       </div> 
 
 
@@ -225,20 +228,22 @@
         </div>
         
             <div id="footer" class="row">
-                <div id="main_quote"><?php echo $this->translate('main_quote'); ?></div>
+                <div id="main_quote"><%= t(:main_quote) %></div>
                 <div id="other_langs_libraries" class="fl">
-                    <p><?php echo $this->translate('read_also_books');
-                        foreach($this->translate('other_libraries') as $title => $href){ ?>
-                        <a href="<?php echo $href ?>" target="blank"><?php echo $title ?></a>
-                        <?php }?>
+                    <p><%= t(:read_also_books) %>
+                        <% if t(:other_libraries).is_a?(Hash) %>
+                          <% t(:other_libraries).each do |title, href| %>
+                            <a href="<%= href %>" target="blank"><%= title %></a>
+                          <% end %>
+                        <% end %>
                     </p>
                 </div>
                 <div id="counter" >
                 </div>
                 <div id="fotmenu">
-                    <p><?php echo "{$this->translate('project_name')} © {$this->translate('since')} - ".date('Y'); ?>
-                        <a href='/java-book/about/'>| <?php echo $this->translate('about_site'); ?> |</a>
-                        <a href="/java-book/contact/"><?php echo $this->translate('contacts'); ?> </a>
+                    <p><%= "#{t(:project_name)} © #{t(:since)} - #{Date.today.year}" %>
+                        <a href='/java-book/about/'>| <%= t(:about_site) %> |</a>
+                        <a href="/java-book/contact/"><%= t(:contacts)%> </a>
                     </p>
                 </div>
                 <div class="clear"></div>
@@ -267,7 +272,7 @@
                         <p></p>
                         <br/>
                         <div class="clear"></div>
-                        <a class="button"><?php echo $this->translate('ok'); ?></a>
+                        <a class="button"><%= t(:ok) %></a>
                         <div class="clear"></div>
                         <br/>
                     </div>
@@ -280,7 +285,7 @@
             echo $this->render('book/reader.phtml');
         }else{ ?> 
             <div class="book_loader">
-                <?php echo $this->translate('wait_pls'); ?>...
+                <%= t(:wait_pls) %>...
             </div>
         <?php }?>
     </div>
@@ -289,17 +294,6 @@
         <div class="l_side">
             <div class="g_settings_ico"></div>
         </div>
-        <!-- <div id="g_settings_wrap">
-            <h4>Налаштування</h4>
-            <br>
-            &#8226; Показувати твори з розміром тексту не менше 
-            <input name="settings_min_text_size" value="0" />
-            кБ
-            <br>
-            <br>
-            <a class="enable_settings button lil_button" >Застосувати</a>
-            <div class="lil_loader"></div>
-        </div> -->
         <?php if($controller == 'book') echo $this->render('book/bookpage_additions.phtml'); ?>
         <div id="clear"></div>
     </div>
@@ -344,7 +338,7 @@
 
       window.socrat_action ="<?php echo $this->blocks()->get_action(); ?>";
       window.socrat_controller ="<?php echo $this->blocks()->get_active(); ?>";
-      window.user_id =<?php echo $this->Keeper()->get_user_id(); ?>;
+      // window.user_id =<?php echo $this->Keeper()->get_user_id(); ?>;
     </script>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>

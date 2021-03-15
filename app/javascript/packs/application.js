@@ -18,6 +18,7 @@ require("packs/jquery.validate")
 require("packs/bootstrap.min")
 require("packs/front_global")
 require("packs/simple_slider")
+require("packs/home_page")
 
 Rails.start()
 Turbolinks.start()

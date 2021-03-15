@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Base::Services::CachedData do
   describe '.call' do
     let!(:cache_key) { 'some_str' }
-    let!(:cache_value) { ['obj1', 'obj2'] }
+    let!(:cache_value) { %w[obj1 obj2] }
     let!(:cache_expiration) { 1.day }
 
     it 'stores data to memory if it not exists' do
