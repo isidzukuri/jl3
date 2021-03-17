@@ -21,5 +21,5 @@ require("packs/simple_slider")
 require("packs/home_page")
 
 Rails.start()
-Turbolinks.start()
+// Turbolinks.start()
 // ActiveStorage.start()

@@ -1,0 +1,9 @@
+<% link = pagy_link_proc(pagy) -%>
+<%#                            -%><div class="paginator">
+<%#                            -%>  <%= t(:go_to_page) %>:
+<% pagy.series.each do |item| %>
+<%   if    item.is_a?(Integer) -%>  <%== link.call(item) %>
+<%   elsif item.is_a?(String)  -%>  <%= item %>
+<%   end                       -%>
+<% end                         -%>
+<%#                            -%></div>

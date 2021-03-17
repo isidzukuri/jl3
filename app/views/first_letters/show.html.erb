@@ -1,0 +1,19 @@
+<div>
+  <h2><%= @letter[:symbol] %></h2>
+    <p><%== @text %></p>
+    <br />
+    <%= render partial: 'likes' %>
+    
+    <div class="book_list">
+      <% @authors.each do |author| %>
+        <div class="bookblock">
+            <div class="genrhru">
+              <%= link_to author[:full_name], author_path(id: author_path_param(author)), class: 'booklink' %><br>
+              <%= link_to t(:all_author_books), author_path(id: author_path_param(author)), class: 'flink' %><br>
+            </div>
+            <div class="clear"></div>
+        </div>
+      <% end %>
+    </div>
+    <%= render partial: 'paginator', locals: { pagy: @paginator } %>
+</div>
