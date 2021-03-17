@@ -6,7 +6,7 @@ FactoryBot.define do
     photo { 'some_file.jpg' }
     img_alt { FFaker::Lorem.words }
     img_title { FFaker::Lorem.words }
-    keywords { FFaker::Lorem.words(9) }
+    keywords { FFaker::Lorem.words(9).join(' ') }
     meta_description { FFaker::Lorem.sentence(12) }
     date { Time.now.to_i }
     published { true }

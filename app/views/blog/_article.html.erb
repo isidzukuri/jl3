@@ -1,0 +1,13 @@
+<div class="post">
+  <a href="<%= blog_path(article[:seo_url]) %>" class="post_img">
+    <img src="<%= article_image_src(article) %>" 
+         alt="<%= article[:img_alt] %>" 
+         title="<%= article[:img_title]%>" />
+  </a>
+  <div class="post_text">
+    <h3><%= link_to article[:title], blog_path(article[:seo_url]) %></h3>
+    <p><%= article[:description] %></p>
+    <a href="<%= blog_path(article[:seo_url]) %>">(<%= t(:read_full) %>)</a>
+  </div>
+  <div class="clear"></div>
+</div>

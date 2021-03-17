@@ -1,0 +1,37 @@
+<div class="blog_post" itemscope itemtype="http://schema.org/Article">
+  <div class="bread">
+    <a href="/blog/page/1">&lsaquo;&lsaquo; <%= t(:all_articles) %></a>
+  </div>
+  <h2 itemprop="name"><%= @article[:title] %></h2>
+  <% if @article[:photo] %>
+    <img src="/uploads/blog/300x300_<%= @article[:photo] %>" 
+         alt="<%= @article[:img_alt] %>" 
+         title="<%= @article[:img_title]%>"
+         itemprop="image" />
+  <% end %>
+  <div itemprop="articleBody">
+    <%== @article[:text] %>
+  </div>
+
+  <div class="clear"></div>
+  <div class="dashed_bot"></div>
+  <%= render partial: 'likes' %>
+  <div class="dashed_bot"></div>
+  <%= render partial: 'fb_comments' %>
+  <div class="clear"></div>
+
+
+  <div class="other_posts">
+    <h2><%= t(:other_articles) %>:</h2>
+    <% @other_articles.each do |article| %>
+      <a href="<%= blog_path(article[:seo_url]) %>">
+        <img src="<%= article_image_src(article) %>" 
+             alt="<%= article[:img_alt] %>" 
+             title="<%= article[:img_title]%>" />
+        <%= article[:title] %>
+      </a>  
+    <% end %>
+    <div class="clear"></div>
+  </div>
+
+</div>
