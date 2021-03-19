@@ -11,6 +11,10 @@ RSpec.describe HomeController do
     let!(:book_1) { create :book }
     let!(:book_2) { create :book }
     let(:last_books_ids) { [book_2.id, book_1.id].join(',') }
+    let!(:letter) { create :letter, symbol: 'A' }
+    let!(:letter_2) { create :letter, symbol: 'B' }
+    let!(:genre) { create :genre }
+    let!(:genre_2) { create :genre }
 
     subject { get :index }
 
@@ -45,8 +49,21 @@ RSpec.describe HomeController do
       expect(response.body).to include("<meta name=\"description\" content=\"#{meta_data[:description]}\" />")
     end
 
-    # genres
-    # first letters
-    # books
+    it 'has alphabet menu' do
+      expect(response.body).to include("fsymbol/#{letter.id}")
+      expect(response.body).to include("fsymbol/#{letter_2.id}")
+    end
+
+    it 'has genre menu' do
+      expect(response.body).to include("genre/#{genre.seo_name}/page/1")
+      expect(response.body).to include("genre/#{genre_2.seo_name}/page/1")
+    end
+
+    it 'has last books' do
+      expect(response.body).to include(book_1[:bookname])
+      expect(response.body).to include(book_path(book_1[:seo]))
+      expect(response.body).to include(book_2[:bookname])
+      expect(response.body).to include(book_path(book_2[:seo]))
+    end
   end
 end

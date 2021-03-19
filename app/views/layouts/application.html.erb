@@ -38,7 +38,8 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_link_tag I18n.locale %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application' %>
+  <%= javascript_pack_tag "jl_i18n_#{I18n.locale}" %>
 
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

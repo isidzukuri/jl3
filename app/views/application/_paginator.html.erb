@@ -4,6 +4,7 @@
 <% pagy.series.each do |item| %>
 <%   if    item.is_a?(Integer) -%>  <%== link.call(item) %>
 <%   elsif item.is_a?(String)  -%>  <%= item %>
+<%   elsif item == :gap        -%>  ...
 <%   end                       -%>
 <% end                         -%>
 <%#                            -%></div>

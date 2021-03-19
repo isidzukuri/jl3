@@ -1,0 +1,15 @@
+<div class="bookblock" data-book_id='<%= book[:id] %>'>
+  <%= link_to '', book_path(id: book_key(book)), class: 'booklink anctom' %>
+  <div class="genrhru">
+      <%= link_to book[:bookname], book_path(id: book_key(book)), class: 'booklink' %>
+      <span class="file_size_list">(<%= book[:txt_size_kb] %>kb)</span>
+      <br>
+      <a href="/java-book/author/<%= author_key(book) %>" class="flink"><%= author_full_name(book) %></a><br />
+  </div>
+  <div class="list_actions">
+      <a class="to_read_later fl" alt="<%= t(:read_later) %>" title="<%= t(:read_later) %>" data-list_type="later" ></a>
+      <a class="to_readed fl" alt="<%= t(:add_to_readed) %>" title="<%= t(:add_to_readed) %>" data-list_type="readed"></a>
+      <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>

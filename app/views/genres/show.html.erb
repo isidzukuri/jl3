@@ -1,0 +1,12 @@
+<div>
+  <h2><%= @genre_data[:name] %></h2>
+    <%= render partial: 'book/sort' %>
+    <div class="book_list">
+      <%= render partial: 'book/book', collection: @books %>
+    </div>
+    <%= render partial: 'paginator', locals: { pagy: @paginator } %>
+    <%= render partial: 'likes' %>
+    <br />
+    <p><%== @text %></p>
+    <br />
+</div>

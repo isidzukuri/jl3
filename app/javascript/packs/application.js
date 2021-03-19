@@ -19,6 +19,7 @@ require("packs/bootstrap.min")
 require("packs/front_global")
 require("packs/simple_slider")
 require("packs/home_page")
+require("packs/book_list")
 
 Rails.start()
 // Turbolinks.start()
