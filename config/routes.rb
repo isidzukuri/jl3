@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :blog, only: [:index, :show]
   get 'blog/page/:page', to: 'blog#index'
+  get 'latest', to: 'book#latest'
 
   scope '(java-book)' do
     get 'fsymbol/:id(/page/:page)', to: 'first_letters#show'

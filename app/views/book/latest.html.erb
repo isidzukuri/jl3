@@ -1,0 +1,10 @@
+<div>
+  <h2><%= @meta_title %></h2>
+    <p><%== @text %></p>
+    <br />
+    <div class="book_list">
+      <%= render partial: 'book/book', collection: @books %>
+    </div>
+    <br />
+    <%= render partial: 'likes' %>
+</div>
