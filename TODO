@@ -7,7 +7,8 @@
 - lets encrypt ssl
 * get rid of "java-" suffix from urls
 - build each bok in each format to catch bugs
-* add to list from book list 
+* add to list from book list
+- redirect fom paper books to index 
 
 
 book page:

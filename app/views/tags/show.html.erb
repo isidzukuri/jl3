@@ -1,0 +1,17 @@
+<div>
+    <p><%= t(:books_with_tag) %>:</p>
+    <h2><%= @tag_data[:title] %></h2>
+    <a href="/tag/list" class="b_tag"><%= t(:show_tags_list) %></a>
+    <div class="clear"></div>
+    <p><%== @tag_data[:text] %></p>
+    <br />
+    <%= render partial: 'likes' %>
+    <%= render partial: 'book/sort' %>
+    <div class="book_list">
+      <%= render partial: 'book/book', collection: @books %>
+    </div>
+    <%= render partial: 'paginator', locals: { pagy: @paginator } %>
+    <br />
+    <p><%== @text %></p>
+    <br />
+</div>

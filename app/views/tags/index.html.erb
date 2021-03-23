@@ -1,0 +1,13 @@
+<div>
+    <h2><%= t(:tags_list) %></h2>
+    <div class="clear"></div>
+    <br/>
+
+    <div class="tag_list">
+        <% @tags.each do |tag| %>
+        <a href="/tag/<%= tag[:seo_url] %>/page/1" class="b_tag">#<%= tag[:title] %></a>
+        <% end %>
+        <div class="clear"></div>
+    </div>
+    <%= render partial: 'paginator', locals: { pagy: @paginator } %>
+</div>
