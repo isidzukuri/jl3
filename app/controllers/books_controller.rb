@@ -1,4 +1,4 @@
-class BookController < ApplicationController
+class BooksController < ApplicationController
   def latest
     @books = Books::Queries::ListWithAuthors.new
                                             .call
