@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe BookController do
+RSpec.describe BooksController do
   render_views
 
   describe '#latest' do

@@ -6,9 +6,9 @@
     <p><%== @tag_data[:text] %></p>
     <br />
     <%= render partial: 'likes' %>
-    <%= render partial: 'book/sort' %>
+    <%= render partial: 'books/sort' %>
     <div class="book_list">
-      <%= render partial: 'book/book', collection: @books %>
+      <%= render partial: 'books/book', collection: @books %>
     </div>
     <%= render partial: 'paginator', locals: { pagy: @paginator } %>
     <br />
