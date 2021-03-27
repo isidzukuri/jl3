@@ -1,0 +1,16 @@
+<div itemscope itemtype="http://schema.org/Person">
+  <h2 itemprop="name"><%= @author_data[:full_name] %></h2>
+    <% if @author_data[:portrait].present? %>
+        <img class="bio_portret" src='/images/portraits/<%= @author_data[:portrait] %>' itemprop="image" />
+    <% end %>
+    <%== @author_data[:bio] %>
+    <div class="clear"></div>
+    <br/>
+    <p><b><%= t(:books_in_lib) %>:</b></p>
+    <div class="book_list">
+      <%= render partial: 'books/book', collection: @books %>
+    </div>
+    <%= render partial: 'paginator', locals: { pagy: @paginator } %>
+    <%= render partial: 'likes' %>
+    <br />
+</div>

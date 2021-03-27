@@ -3,8 +3,10 @@
   <div class="genrhru">
       <%= link_to book[:bookname], book_path(id: book_key(book)), class: 'booklink' %>
       <span class="file_size_list">(<%= book[:txt_size_kb] %>kb)</span>
+      <% if author_key(book) %>
       <br>
       <a href="/java-book/author/<%= author_key(book) %>" class="flink"><%= author_full_name(book) %></a><br />
+      <% end %>
   </div>
   <div class="list_actions">
       <a class="to_read_later fl" alt="<%= t(:read_later) %>" title="<%= t(:read_later) %>" data-list_type="later" ></a>

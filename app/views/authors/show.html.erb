@@ -1,0 +1,16 @@
+<div>
+  <h2><%= @author_data[:full_name] %></h2>
+    <% if @author_data[:bio] %>
+        <%= link_to t(:read_bio), author_bio_path(@author_data[:id]), class: 'brown' %>
+    <% end %>
+    <br/>
+    <p><%== @text %></p>
+    <br/>
+    <p><b><%= t(:books_in_lib) %>:</b></p>
+    <div class="book_list">
+      <%= render partial: 'books/book', collection: @books %>
+    </div>
+    <%= render partial: 'paginator', locals: { pagy: @paginator } %>
+    <%= render partial: 'likes' %>
+    <br />
+</div>
