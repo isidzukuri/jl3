@@ -16,8 +16,6 @@ FactoryBot.define do
     # mobi { FFaker::Internet.http_url }
     # djvu { FFaker::Internet.http_url }
 
-    # genre { create(:genre) }
-    # authors { [create(:author)] }
     author
     genre
   end

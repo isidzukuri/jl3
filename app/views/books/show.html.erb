@@ -1,0 +1,118 @@
+<div id="book_page" itemscope itemtype="http://schema.org/Book">
+    <div>
+        <h2 class="booktitle CyrillicOld" itemprop="name"><%= @book[:bookname] %></h2>
+        <a href="/java-book/genre/<%= @book[:seo_name] %>/page/1" class="black" itemprop="genre"><%= @book[:name] %></a> /
+        <a href="/java-book/author/<%= author_key(@book) %>" itemprop="author"><%= author_full_name(@book) %></a>
+        <br />
+    </div>
+    <% if @book[:tags_list].present? %>
+    <div>
+        <% @book[:tags_list].each do |tag| %>
+        <a href="/tag/<%= tag[:seo_url] %>/page/1" class="b_tag">#<%= tag[:title] %></a>
+        <% end %>
+        <div class="clear"></div>
+    </div>
+    <% end %>
+    <div class="rating_stars">
+        <div class="stars <%= @rating_class %>">
+            <div rate="1"></div>
+            <div rate="2"></div>
+            <div rate="3"></div>
+            <div rate="4"></div>
+            <div rate="5"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="stars_title" 
+            <% if @book[:ratings_count] > 0 %>
+             itemprop="aggregateRating" 
+             itemscope itemtype="http://schema.org/AggregateRating"
+            <% end %>>
+              <%= t(:rate) %> 
+              <span id="rating" 
+                <% if @book[:ratings_count] > 0 %>
+                itemprop="ratingValue"
+                <% end %>><%= @rating %></span> 
+              (<%= t(:total_votes) %>: 
+              <span id="votes" 
+                <% if @book[:ratings_count] > 0 %>
+                itemprop="ratingCount"
+              <% end %>><%= @book[:ratings_count] %></span>)
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <div>
+      <p><strong><%= t(:book_description) %>:</strong></p>
+        <% if @book[:cover].present? %>
+        <img style='width:0; height:0; display:block; overflow:hidden;' 
+             src="/images/covers/<%= @book[:cover] %>" 
+             alt="<%= @book['bookname'] %>" 
+             title="<%= @book['bookname'] %>" 
+             itemprop="image"/>
+        <% end %>
+        <div class="clear"></div>
+        <div itemprop="description">
+        <%== @book[:bookdescribe] %>
+        </div>
+        <div class="clear"></div>
+        <% if @book[:censorship] == 0 %>
+          <% if @book[:bad_txt] == 0 %>
+        <span id="show_reader" data-txt="<%= @book[:txtfile] %>">[<%= t(:whole_text) %>]</span>
+          <% end %>
+        <% end %>
+    </div>
+    
+    <div class="download">
+      <div class="dashed_bot"></div>
+      <h2 class="CyrillicOld"><%= t(:download_book) %>:</h2>
+        <% if @book[:censorship] == 0 %>
+            <% Book::FORMATS.each do |frmt| %>
+              <% next if @book["bad_#{frmt}"] == 1 %>
+              <a href="/files/<%= "#{@book[:txtfile]}.#{frmt}" %>" id="<%= frmt %>">
+                <img src="<%= image_path("#{frmt}.png") %>" 
+                     alt="<%= [t(:download_read), @book[:bookname], frmt].join(' ') %>" 
+                     title="<%= [t(:download_read), @book[:bookname], t(:in), frmt, t(:format_i)].join(' ') %>" 
+                     width="110" 
+                     height="69">
+              </a>
+            <% end %>
+          <div class="clear"></div>
+        <% else %>
+          <div id="censorship">
+            <p><%= t(:censorship) %></p>
+          </div>
+        <% end %>    
+    </div>
+    
+    <div class="author_link">
+        <?php if($this->book['author_link']){
+            $a_links = unserialize($this->book['author_link']);
+            foreach($a_links['urls'] as $al_key => $al_url){
+               if($al_url){
+                $al_ancor = $a_links['ancors'][$al_key] ? $a_links['ancors'][$al_key] : $al_url; 
+        ?>
+            <a href="<?php echo $al_url ?>" rel="nofollow" target="blank">[<?php echo $al_ancor ?>]</a> 
+        <?php
+              }    
+            }
+        } 
+        ?>
+    
+      <% if @book[:shop_url].present? %>
+      <a href="<%= @book[:shop_url] %>" rel="nofollow" target="blank">[<%= @book[:shop_msg] %>]</a> 
+      <% end %>
+    </div>
+
+    <div class="dashed_bot"></div>
+    <%= render partial: 'likes' %>
+    <div class="dashed_bot"></div>
+    <%= render partial: 'fb_comments' %>
+    <div class="clear"></div>
+</div>
+
+<script>
+window.cookie_string = "<?php echo $this->cookie_string?>";
+window.ratings_count = <%= @book[:ratings_count] %>;
+window.current_rating = <%= @rating %>;
+window.rating_class = "<%= @rating_class %>";
+</script>

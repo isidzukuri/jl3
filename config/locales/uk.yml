@@ -70,7 +70,7 @@ uk:
   rate: 'рейтинг'
   total_votes: 'всього голосів'
   book_description: 'Опис книги'
-  whole_text: 'переглянути текст повністю'
+  whole_text: 'переглянути текст'
   download_book: 'Скачати книгу'
   download: 'скачати'
   in: 'в'

@@ -17,13 +17,14 @@ book page:
 - book data
 - downloads
 - bookreader
-- fb comments
 - formats generators
 * security checks
 * rating
 * add tag
 * add to list
 * add quote
+- js
+* refactor book_support.author_link
 
 search page
 - book search
@@ -33,7 +34,7 @@ search page
 * extended search
 
 blog page
-* carierwave for imagess
+* carierwave for images
 
 User page
 *
@@ -44,5 +45,8 @@ Photos page
 Gengre page
 - add to readlist
 * remote sort
+
+Pages
+- text
 
 Error Pages

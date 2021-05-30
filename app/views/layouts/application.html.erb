@@ -169,36 +169,30 @@
         </div>
       </div> 
 
-
-
-        <?php if($controller == 'book'){?>
-        <div class="container descript_text">
-            <?php echo $this->text ?>
-        </div>
-        <?php }?>
-        
-            <div id="footer" class="row">
-                <div id="main_quote"><%= t(:main_quote) %></div>
-                <div id="other_langs_libraries" class="fl">
-                    <p><%= t(:read_also_books) %>
-                        <% if t(:other_libraries).is_a?(Hash) %>
-                          <% t(:other_libraries).each do |title, href| %>
-                            <a href="<%= href %>" target="blank"><%= title %></a>
-                          <% end %>
-                        <% end %>
-                    </p>
-                </div>
-                <div id="counter" >
-                </div>
-                <div id="fotmenu">
-                    <p><%= "#{t(:project_name)} © #{t(:since)} - #{Date.today.year}" %>
-                        <a href='/java-book/about/'>| <%= t(:about_site) %> |</a>
-                        <a href="/java-book/contact/"><%= t(:contacts)%> </a>
-                    </p>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div><!-- /.container -->
+      <%= render partial: 'books/text_block' %>
+      
+      <div id="footer" class="row">
+          <div id="main_quote"><%= t(:main_quote) %></div>
+          <div id="other_langs_libraries" class="fl">
+              <p><%= t(:read_also_books) %>
+                  <% if t(:other_libraries).is_a?(Hash) %>
+                    <% t(:other_libraries).each do |title, href| %>
+                      <a href="<%= href %>" target="blank"><%= title %></a>
+                    <% end %>
+                  <% end %>
+              </p>
+          </div>
+          <div id="counter" >
+          </div>
+          <div id="fotmenu">
+              <p><%= "#{t(:project_name)} © #{t(:since)} - #{Date.today.year}" %>
+                  <a href='/java-book/about/'>| <%= t(:about_site) %> |</a>
+                  <a href="/java-book/contact/"><%= t(:contacts)%> </a>
+              </p>
+          </div>
+          <div class="clear"></div>
+      </div>
+    </div><!-- /.container -->
 
 
 
